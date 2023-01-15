@@ -1,2 +1,4 @@
 rootProject.name = 'spring-kafka-streams-starter'
-
+include 'spring-boot-kafka-streams-starter'
+include 'spring-boot-kafka-streams-autoconfigure'
+include 'spring-boot-kafka-streams-library'

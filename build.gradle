@@ -1,19 +1,53 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '3.0.1' apply false
+    id 'io.spring.dependency-management' version '1.1.0'
+
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+dependencyManagement {
+    imports {
+        mavenBom SpringBootPlugin.BOM_COORDINATES
+    }
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+allprojects{
+
+    group 'com.kurosz'
+    version '1.0-SNAPSHOT'
+    sourceCompatibility = JavaVersion.VERSION_17
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
-test {
-    useJUnitPlatform()
+subprojects{
+
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    }
+
+    ext{
+        depVersions = [
+                'springBootVersion': '3.0.1',
+                'kafkaStreamsVersion': '3.3.1'
+        ]
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
 }
+
+
+

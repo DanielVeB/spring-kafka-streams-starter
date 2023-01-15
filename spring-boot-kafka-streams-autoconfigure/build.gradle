@@ -10,10 +10,25 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
+
+    implementation project(':spring-boot-kafka-streams-library')
+    implementation 'org.springframework.boot:spring-boot'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
 }
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.kurosz'
+            artifactId = 'spring-boot-kafka-streams-autoconfigure'
+            version = '1.1'
+
+            from components.java
+        }
+    }
 }
